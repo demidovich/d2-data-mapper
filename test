@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"
+
+docker exec -ti d2-data-mapper /app/vendor/bin/phpunit $@
