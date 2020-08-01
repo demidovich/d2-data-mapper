@@ -8,13 +8,14 @@ abstract class DataMapper
 {
     protected string $entity;
     protected string $primaryKey;
+    protected array  $fields;
 
     private array $identityMap = [];
 
-    public function mappedEntity(string $primaryKey)
-    {
-        return isset($this->identityMap[$primaryKey]) ? $this->identityMap[$primaryKey] : null;
-    }
+    // public function mappedEntity(string $primaryKey)
+    // {
+    //     return isset($this->identityMap[$primaryKey]) ? $this->identityMap[$primaryKey] : null;
+    // }
 
     public function entity($row)
     {
@@ -35,8 +36,18 @@ abstract class DataMapper
         return $this->identityMap[$pkey];
     }
 
-    public function store($entity): void
+    public function persistedFields($entity): void
     {
+        $result = [];
 
+        foreach ($this->fields as $field) {
+            
+        }
+
+        $pkey = (string) $entity->{$this->primaryKey};
+
+        if (! isset($this->identityMap[$pkey])) {
+
+        }
     }
 }
