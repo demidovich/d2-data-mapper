@@ -1,7 +1,5 @@
 <?php
 
-use Performance\ExampleCommand;
-
 $autoload = __DIR__.'/../vendor/autoload.php';
 
 if (! file_exists($autoload)) {
