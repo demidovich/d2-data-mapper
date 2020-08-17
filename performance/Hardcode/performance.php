@@ -1,6 +1,6 @@
 <?php
 
-use Performance\Hydratable\User;
+use Performance\Hardcode\User;
 
 $autoload = __DIR__.'/../../vendor/autoload.php';
 
