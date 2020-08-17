@@ -2,7 +2,8 @@
 
 namespace D2\DataMapper;
 
-use D2\Entity\EntityBuilder;
+use D2\DataMapper\Entity;
+use RuntimeException;
 
 abstract class DataMapper
 {
@@ -27,10 +28,15 @@ abstract class DataMapper
             $row = (array) $row;
         }
 
-        $pkey = $row[$this->primaryKey];
+        $pkey   = $row[$this->primaryKey];
+        $entity = $this->entity;
+
+        if (! is_subclass_of($this->entity, Entity::class)) {
+            throw new RuntimeException("The class $entity must be implements an interface " . Entity::class);
+        }
 
         if (! isset($this->identityMap[$pkey])) {
-            $this->identityMap[$pkey] = EntityBuilder::byConstructor($this->entity, $row);
+            $this->identityMap[$pkey] = $entity::fromState($row);
         }
 
         return $this->identityMap[$pkey];
@@ -38,16 +44,9 @@ abstract class DataMapper
 
     public function persistedFields($entity): void
     {
-        $result = [];
-
-        foreach ($this->fields as $field) {
-            
-        }
-
-        $pkey = (string) $entity->{$this->primaryKey};
-
-        if (! isset($this->identityMap[$pkey])) {
-
-        }
+        // Собираем в кучу
+        // Описание полей в маппере
+        // Данные из сущности
+        // Данные из unit of works
     }
 }

@@ -2,7 +2,7 @@
 
 namespace D2\DataMapper\Entity;
 
-interface StateableEntity
+interface Stateable
 {
     public static function fromState($state);
 }
