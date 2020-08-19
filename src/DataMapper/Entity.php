@@ -2,9 +2,7 @@
 
 namespace D2\DataMapper;
 
-use D2\DataMapper\Entity\Stateable;
-
-abstract class Entity implements Stateable
+abstract class Entity
 {
-
+    abstract public static function fromState($state);
 }

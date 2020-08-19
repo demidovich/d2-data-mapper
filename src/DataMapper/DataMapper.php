@@ -11,35 +11,24 @@ abstract class DataMapper
     protected string $primaryKey;
     protected array  $fields;
 
-    private array $identityMap = [];
+    abstract protected function entityProxy(): EntityProxy;
 
-    // public function mappedEntity(string $primaryKey)
-    // {
-    //     return isset($this->identityMap[$primaryKey]) ? $this->identityMap[$primaryKey] : null;
-    // }
-
-    public function entity($row)
+    public function entity($state)
     {
-        if (! $row) {
+        if (! $state) {
             return null;
         }
 
-        if (! is_array($row)) {
-            $row = (array) $row;
+        if (! is_array($state)) {
+            $state = (array) $state;
         }
 
-        $pkey   = $row[$this->primaryKey];
-        $entity = $this->entity;
+        $pkey   = $state[$this->primaryKey];
+        $entity = $this->entityProxy()->entity($state);
 
-        if (! is_subclass_of($this->entity, Entity::class)) {
-            throw new RuntimeException("The class $entity must be implements an interface " . Entity::class);
-        }
+        StateMap::add($this->entity, $pkey, $state);
 
-        if (! isset($this->identityMap[$pkey])) {
-            $this->identityMap[$pkey] = $entity::fromState($row);
-        }
-
-        return $this->identityMap[$pkey];
+        return $entity;
     }
 
     public function persistedFields($entity): void
@@ -47,6 +36,6 @@ abstract class DataMapper
         // Собираем в кучу
         // Описание полей в маппере
         // Данные из сущности
-        // Данные из unit of works
+        // Данные из StateMap
     }
 }
