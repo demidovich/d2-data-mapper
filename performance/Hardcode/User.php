@@ -47,6 +47,7 @@ class User extends Entity
         $self->fields      = UserFields::fromState($state);
         $self->address     = UserAddress::fromState($state);
         $self->preferences = UserPreferences::fromState($state);
+        $self->init();
 
         return $self;
     }

@@ -21,10 +21,6 @@ trait Hydratable
             $hydrator->addPrefix($prefix, $class);
         }
 
-        // $hydrator->addPrefixes(
-        //     static::prefixes()
-        // );
-
         if (! is_array($state)) {
             $state = (array) $state;
         }
