@@ -8,6 +8,6 @@ class DataMapperTest extends TestCase
 {
     public function test()
     {
-        $this->assertTrue(true);
+
     }
 }

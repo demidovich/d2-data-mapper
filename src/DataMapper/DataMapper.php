@@ -2,41 +2,40 @@
 
 namespace D2\DataMapper;
 
-use D2\Entity\EntityBuilder;
+use D2\DataMapper\Entity;
+use RuntimeException;
 
 abstract class DataMapper
 {
     protected string $entity;
     protected string $primaryKey;
+    protected array  $fields;
 
-    private array $identityMap = [];
+    abstract protected function entityProxy(): EntityProxy;
 
-    public function mappedEntity(string $primaryKey)
+    public function entity($state)
     {
-        return isset($this->identityMap[$primaryKey]) ? $this->identityMap[$primaryKey] : null;
-    }
-
-    public function entity($row)
-    {
-        if (! $row) {
+        if (! $state) {
             return null;
         }
 
-        if (! is_array($row)) {
-            $row = (array) $row;
+        if (! is_array($state)) {
+            $state = (array) $state;
         }
 
-        $pkey = $row[$this->primaryKey];
+        $pkey   = $state[$this->primaryKey];
+        $entity = $this->entityProxy()->entity($state);
 
-        if (! isset($this->identityMap[$pkey])) {
-            $this->identityMap[$pkey] = EntityBuilder::byConstructor($this->entity, $row);
-        }
+        StateMap::add($this->entity, $pkey, $state);
 
-        return $this->identityMap[$pkey];
+        return $entity;
     }
 
-    public function store($entity): void
+    public function persistedFields($entity): void
     {
-
+        // Собираем в кучу
+        // Описание полей в маппере
+        // Данные из сущности
+        // Данные из StateMap
     }
 }

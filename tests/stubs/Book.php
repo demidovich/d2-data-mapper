@@ -2,28 +2,17 @@
 
 namespace Tests\Stubs;
 
+use D2\Entity\Enity;
 use DateTimeImmutable;
 
-class Book
+class Book implements Entity
 {
-    private $id;
-    private $title;
-    private $author_id;
-    private $published_at;
-
-    // public function __construct(
-    //     BookId $id, 
-    //     string $title, 
-    //     int $author_id, 
-    //     DateTimeImmutable $published_at
-    // ) {
-          
-    // }
-
-    public static function hydrate(array $params)
-    {
-
+    public function __construct(
+        BookId $id,
+        string $title,
+        int $author_id,
+        DateTimeImmutable $published_at
+    ) {
+        
     }
 }
-
-$book = Book::build($row);

@@ -10,4 +10,10 @@ class BookMapper extends DataMapper
 {
     protected string $entity = Book::class;
     protected string $primariKey = 'id';
+    protected array  $fields = [
+        'id',
+        'title',
+        'author_id',
+        'published_at'
+    ];
 }
