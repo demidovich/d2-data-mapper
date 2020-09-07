@@ -2,13 +2,16 @@
 
 namespace D2\DataMapper;
 
+use D2\DataMapper\Contracts\Stateable;
+use RuntimeException;
+
 class DataMapper
 {
     protected string $entity;
     protected string $primaryKey;
     protected array  $fields;
 
-    public function entity($state)
+    protected function entity($state)
     {
         if (! $state) {
             return null;
@@ -18,19 +21,35 @@ class DataMapper
             $state = (array) $state;
         }
 
+        if (! ($this->entity instanceof Stateable)) {
+            throw new RuntimeException(
+                "Entity class \"{$this->entity}\" does not implementing interface \"" . Stateable::class . "\""
+            );
+        }
+
         $pkey   = $state[$this->primaryKey];
         $entity = ($this->entity)::fromState($state);
 
-        StateMap::add($this->entity, $pkey, $state);
+        StateMap::put($this->entity, $pkey, $state);
 
         return $entity;
     }
 
-    public function persistedFields($entity): void
+    protected function state(Stateable $entity): array
     {
-        // Собираем в кучу
-        // Описание полей в маппере
-        // Данные из сущности
-        // Данные из StateMap
+        $stateFields = array_flip($this->fields);
+
+        return array_intersect_key(
+            $entity->toState(), 
+            $stateFields
+        );
+    }
+
+    protected function stateDiff(Stateable $entity): array
+    {
+        $oldState = StateMap::get($this->entity, $this->primaryKey);
+        $newState = $this->state($entity);
+
+        return $oldState ? array_diff($newState, $oldState) : $newState;
     }
 }
