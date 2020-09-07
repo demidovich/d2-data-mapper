@@ -2,16 +2,11 @@
 
 namespace D2\DataMapper;
 
-use D2\DataMapper\Entity;
-use RuntimeException;
-
-abstract class DataMapper
+class DataMapper
 {
     protected string $entity;
     protected string $primaryKey;
     protected array  $fields;
-
-    abstract protected function entityProxy(): EntityProxy;
 
     public function entity($state)
     {
@@ -24,7 +19,7 @@ abstract class DataMapper
         }
 
         $pkey   = $state[$this->primaryKey];
-        $entity = $this->entityProxy()->entity($state);
+        $entity = ($this->entity)::fromState($state);
 
         StateMap::add($this->entity, $pkey, $state);
 
