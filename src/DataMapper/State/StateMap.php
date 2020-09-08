@@ -1,6 +1,6 @@
 <?php
 
-namespace D2\DataMapper;
+namespace D2\DataMapper\State;
 
 /**
  * The class stores the initial state of the entities.

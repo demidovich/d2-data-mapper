@@ -16,7 +16,7 @@ class ArrayAttribute
         return $this->values;
     }
 
-    public function push($value): void
+    public function put($value): void
     {
         $this->values[] = $value;
         $this->values = array_unique($this->values, SORT_STRING);

@@ -3,6 +3,7 @@
 namespace D2\DataMapper;
 
 use D2\DataMapper\Contracts\Stateable;
+use D2\DataMapper\State\StateMap;
 use RuntimeException;
 
 class DataMapper
@@ -11,14 +12,10 @@ class DataMapper
     protected string $primaryKey;
     protected array  $fields;
 
-    protected function entity($state)
+    protected function entity(array $state)
     {
         if (! $state) {
             return null;
-        }
-
-        if (! is_array($state)) {
-            $state = (array) $state;
         }
 
         if (! ($this->entity instanceof Stateable)) {
