@@ -2,21 +2,21 @@
 
 namespace Tests\Stubs;
 
-class BookId
+class UserId
 {
-    private $value;
+    private int $value;
 
     public function __construct(int $value)
     {
-        $this->value = $value;        
+        $this->value = $value;
     }
 
-    public function value(): int
+    public function value()
     {
         return $this->value;
     }
 
-    public function __toString(): string
+    public function __toString()
     {
         return (string) $this->value;
     }

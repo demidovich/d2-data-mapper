@@ -20,7 +20,7 @@ class Entity implements Stateable
         return [];
     }
 
-    public static function fromState(array $state)
+    public static function fromState($state)
     {
         $entityClass = get_called_class();
 
@@ -61,18 +61,28 @@ class Entity implements Stateable
                 continue;
             }
 
-            $valueObjectClass = class_basename($value);
-            if (isset($prefixes[$valueObjectClass])) {
-                $attr = $prefixes[$valueObjectClass] . '_' . $attr;
+            if ($value instanceof Stateable) {
+                $class  = get_class($value);
+                $prefix = isset($prefixes[$class]) ? "{$prefixes[$class]}_" : null;
+                foreach ($value->toState() as $k => $v) {
+                    $state["{$prefix}{$k}"] = $v;
+                }
             }
 
-            if ($value instanceof Stateable) {
-                $state[$attr] = $value->toState();
-            } else {
+            elseif (method_exists($value, 'value')) {
+                $state[$attr] = $value->value();
+            }
+
+            else {
                 $state[$attr] = (string) $value;
             }
         }
 
         return $state;
+    }
+
+    public function __get($name)
+    {
+        return $this->$name;
     }
 }
