@@ -5,14 +5,6 @@ namespace Tests\Stubs;
 use D2\DataMapper\DataMapper;
 use DateTimeImmutable;
 
-/**
- * @property UserId $id;
- * @property string $name;
- * @property string $email;
- * @property UserAddress $address;
- * @property UserPreferences $preferences;
- * @property DateTimeImmutable $created_at;
- */
 class UserDataMapper extends DataMapper
 {
     protected string $entity = User::class;
@@ -28,10 +20,6 @@ class UserDataMapper extends DataMapper
         'address_house',
         'address_flat',
         'address_zip_code',
-        'preferences_locale',
-        'preferences_language',
-        'preferences_timezone',
-        'preferences_subscribe_news',
-        'preferences_subscribe_messages',
+        'preferences',
     ];
 }

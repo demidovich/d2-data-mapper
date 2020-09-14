@@ -12,6 +12,7 @@ use InvalidArgumentException;
  * @property string $name
  * @property string $email
  * @property UserAddress $address
+ * @property UserPreferencesJson $preferences
  * 
  * @method static self fromState($state)
  */
@@ -21,6 +22,7 @@ class User extends Entity
     protected string $name;
     protected string $email;
     protected UserAddress $address;
+    protected UserPreferencesJson $preferences;
 
     protected function init(): void
     {
@@ -32,8 +34,7 @@ class User extends Entity
     protected static function valueObjectPrefixes(): array
     {
         return [
-            'preferences' => UserPreferences::class,
-            'address'     => UserAddress::class,
+            'address' => UserAddress::class,
         ];
     }
 }

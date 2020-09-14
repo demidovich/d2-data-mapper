@@ -28,7 +28,7 @@ class Entity implements Stateable
             throw new RuntimeException("The hydrating class \"{$entityClass}\" cannot have a constructor.");
         }
 
-        $hydrator = new Hydrator($entityClass);
+        $hydrator = Hydrator::onClass($entityClass);
 
         foreach (static::valueObjectPrefixes() as $prefix => $class) {
             $hydrator->addPrefix($prefix, $class);

@@ -59,7 +59,7 @@ class EntityTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
 
-        $entity = User::fromState($state);
+        User::fromState($state);
     }
 
     public function test_entity_to_state()
@@ -68,15 +68,9 @@ class EntityTest extends TestCase
         $entity        = User::fromState($originState);
         $exportedState = $entity->toState();
 
-// dd(
-//     $originState,
-//     $exportedState,
-//     array_diff_assoc($originState, $exportedState)
-// );
-
         $this->assertIsArray($exportedState);
         $this->assertNotEmpty($exportedState);
-        //$this->assert(count(array_diff_assoc($originState, $exportedState)));
+        $this->assertEmpty(array_diff_assoc($originState, $exportedState));
     }
 
     private function userState()
@@ -91,11 +85,7 @@ class EntityTest extends TestCase
             'address_house' => '1',
             'address_flat' => null,
             'address_zip_code' => '350000',
-            'preferences_locale' => 'ru_RU',
-            'preferences_language' => 'russian',
-            'preferences_timezone' => 'utc_plus_3',
-            'preferences_subscribe_news' => true,
-            'preferences_subscribe_messages' => false,
+            'preferences' => json_encode($this->userPreferencesState()),
         ];
     }
 
@@ -108,6 +98,16 @@ class EntityTest extends TestCase
             'house' => '1',
             'flat' => null,
             'zip_code' => '350000',
+        ];
+    }
+
+    private function userPreferencesState()
+    {
+        return (object) [
+            'subsribe_news' => false,
+            'subsribe_notifications' => false,
+            'locale' => 'en_EN',
+            'page_size' => 1000,
         ];
     }
 }
