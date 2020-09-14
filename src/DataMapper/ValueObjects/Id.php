@@ -14,11 +14,6 @@ class Id implements ValueObject, Stateable
         $this->value = $value;
     }
 
-    public static function fromState($value)
-    {
-        return new static($value);
-    }
-
     public function toState(): int
     {
         return $this->value;

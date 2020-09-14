@@ -56,11 +56,15 @@ class Entity implements Stateable
                 continue;
             }
 
+            // if (! ($value instanceof Stateable)) {
+            //     $type = gettype($value);
+            //     throw new RuntimeException(
+            //         "Entity attributes can be a scalar or instance of Stateable contract. Attribute \"{$attr}\" is a \"{$type}\""
+            //     );
+            // }
+
             if (! ($value instanceof Stateable)) {
-                $type = gettype($value);
-                throw new RuntimeException(
-                    "Entity attributes can be a scalar or instance of Stateable contract. Attribute \"{$attr}\" is a \"{$type}\""
-                );
+                continue;
             }
 
             $attrState = $value->toState();
