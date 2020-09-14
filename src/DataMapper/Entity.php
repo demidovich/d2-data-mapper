@@ -51,17 +51,25 @@ class Entity implements Stateable
 
         foreach (get_object_vars($this) as $attr => $value) {
 
-            if (is_scalar($value)) {
+            if (is_scalar($value) || $value === null) {
                 $state[$attr] = $value;
                 continue;
             }
 
-            if (! is_object($value)) {
-                $state[$attr] = $value;
-                continue;
+            if (! ($value instanceof Stateable)) {
+                $type = gettype($value);
+                throw new RuntimeException(
+                    "Entity attributes can be a scalar or instance of Stateable contract. Attribute \"{$attr}\" is a \"{$type}\""
+                );
             }
 
-            if ($value instanceof Stateable) {
+            $attrState = $value->toState();
+
+            if (is_scalar($attrState)) {
+                $state[$attr] = $attrState;
+            }
+
+            elseif (is_array($attrState)) {
                 $class  = get_class($value);
                 $prefix = isset($prefixes[$class]) ? "{$prefixes[$class]}_" : null;
                 foreach ($value->toState() as $k => $v) {
@@ -69,12 +77,10 @@ class Entity implements Stateable
                 }
             }
 
-            elseif (method_exists($value, 'value')) {
-                $state[$attr] = $value->value();
-            }
-
             else {
-                $state[$attr] = (string) $value;
+                throw new RuntimeException(
+                    "Results toState() method can be a scalar or array. Attribute \"{$attr}\"."
+                );
             }
         }
 
