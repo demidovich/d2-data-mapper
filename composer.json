@@ -21,7 +21,6 @@
     },
     "require": {
         "php": ">=7.4",
-        "demidovich/d2-entity-builder": "^0.4",
         "demidovich/d2-hydrator": "^0.2.0"
     },
     "require-dev": {
