@@ -10,7 +10,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "D2\\": "src/"
+            "D2\\DataMapper\\": "src/"
         }
     },
     "autoload-dev": {
