@@ -23,11 +23,6 @@ class Entity implements Stateable
     public static function fromState($state)
     {
         $entityClass = get_called_class();
-
-        if (method_exists($entityClass, '__construct')) {
-            throw new RuntimeException("The hydrating class \"{$entityClass}\" cannot have a constructor.");
-        }
-
         $hydrator = Hydrator::onClass($entityClass);
 
         foreach (static::valueObjectPrefixes() as $prefix => $class) {

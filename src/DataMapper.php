@@ -12,7 +12,7 @@ class DataMapper
     protected string $primaryKey;
     protected array  $fields;
 
-    protected function entity(array $state)
+    protected function entity($state)
     {
         if (! $state) {
             return null;
