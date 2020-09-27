@@ -4,7 +4,6 @@ namespace D2\DataMapper;
 
 use D2\DataMapper\Contracts\Stateable;
 use D2\DataMapper\State\StateMap;
-use RuntimeException;
 
 class DataMapper
 {
@@ -12,26 +11,45 @@ class DataMapper
     protected string $primaryKey;
     protected array  $fields;
 
-    protected function entity($state)
+    /**
+     * Construct entity from state.
+     * 
+     * @param array|object $state
+     * @return Stateable
+     */
+    protected function entity($state): ?Stateable
     {
         if (! $state) {
             return null;
         }
 
-        if (! ($this->entity instanceof Stateable)) {
-            throw new RuntimeException(
-                "Entity class \"{$this->entity}\" does not implementing interface \"" . Stateable::class . "\""
-            );
+        return ($this->entity)::fromState($state);
+    }
+
+    /**
+     * Construct entity from state with modification tracking.
+     * 
+     * @param array|object $state
+     * @return Stateable
+     */
+    protected function modifiableEntity($state): ?Stateable
+    {
+        $entity = $this->entity($state);
+
+        if ($entity) {
+            $pkey = $state[$this->primaryKey];
+            StateMap::put($this->entity, $pkey, $state);
         }
-
-        $pkey   = $state[$this->primaryKey];
-        $entity = ($this->entity)::fromState($state);
-
-        StateMap::put($this->entity, $pkey, $state);
 
         return $entity;
     }
 
+    /**
+     * Fetch entity state.
+     * 
+     * @param Stateable $entity
+     * @return array
+     */
     protected function state(Stateable $entity): array
     {
         $stateFields = array_flip($this->fields);
@@ -42,11 +60,20 @@ class DataMapper
         );
     }
 
-    protected function stateDiff(Stateable $entity): array
+    /**
+     * Fetch entity modified state.
+     * 
+     * @param Stateable $entity
+     * @return array
+     */
+    protected function modifiedState(Stateable $entity): array
     {
-        $oldState = StateMap::get($this->entity, $this->primaryKey);
-        $newState = $this->state($entity);
+        $pkeyName  = $this->primaryKey;
+        $pkeyValue = $entity->$pkeyName->toState();
 
-        return $oldState ? array_diff($newState, $oldState) : $newState;
+        $old = StateMap::get($this->entity, $pkeyValue);
+        $new = $this->state($entity);
+
+        return $old ? array_diff($new, $old) : $new;
     }
 }

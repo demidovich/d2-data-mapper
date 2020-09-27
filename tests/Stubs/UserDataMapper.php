@@ -3,7 +3,6 @@
 namespace Tests\Stubs;
 
 use D2\DataMapper\DataMapper;
-use DateTimeImmutable;
 
 class UserDataMapper extends DataMapper
 {
@@ -22,4 +21,35 @@ class UserDataMapper extends DataMapper
         'address_zip_code',
         'preferences',
     ];
+
+    private $testingState;
+
+    public function __construct($testingState)
+    {
+        $this->testingState = $testingState;        
+    }
+
+    public function retrieve(int $pkey): User
+    {
+        return $this->entity(
+            $this->testingState
+        );
+    }
+
+    public function retrieveModifiable(int $pkey): User
+    {
+        return $this->modifiableEntity(
+            $this->testingState
+        );
+    }
+
+    public function entityState($entity): array
+    {
+        return $this->state($entity);
+    }
+
+    public function entityModifiedState($entity): array
+    {
+        return $this->modifiedState($entity);
+    }
 }

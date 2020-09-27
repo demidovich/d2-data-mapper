@@ -18,4 +18,9 @@ class UserPreferencesJson extends JsonEntity
     protected  bool   $subsribe_notifications = true;
     protected  string $locale = 'ru_RU';
     protected  int    $page_size = 25;
+
+    public function subscribeNews(bool $value): void
+    {
+        $this->subsribe_news = $value;
+    }
 }

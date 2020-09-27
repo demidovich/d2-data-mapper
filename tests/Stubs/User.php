@@ -37,4 +37,14 @@ class User extends Entity
             'address' => UserAddress::class,
         ];
     }
+
+    public function rename(string $value): void
+    {
+        $this->name = $value;
+    }
+
+    public function subscribeNews(): void
+    {
+        $this->preferences->subscribeNews(true);
+    }
 }
