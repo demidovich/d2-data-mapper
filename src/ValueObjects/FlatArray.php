@@ -1,6 +1,6 @@
 <?php
 
-namespace D2\DataMapper\Entity;
+namespace D2\DataMapper\ValueObjects;
 
 class FlatArray
 {
@@ -34,5 +34,10 @@ class FlatArray
     public function values(): array
     {
         return $this->values;
+    }
+
+    public function count(): int
+    {
+        return count($this->values);
     }
 }
