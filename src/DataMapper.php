@@ -32,7 +32,7 @@ class DataMapper
      * @param array|object $state
      * @return Stateable
      */
-    protected function modifiableEntity($state): ?Stateable
+    protected function entityModifiable($state): ?Stateable
     {
         $entity = $this->entity($state);
 
@@ -66,7 +66,7 @@ class DataMapper
      * @param Stateable $entity
      * @return array
      */
-    protected function modifiedState(Stateable $entity): array
+    protected function stateModified(Stateable $entity): array
     {
         $pkeyName  = $this->primaryKey;
         $pkeyValue = $entity->$pkeyName->toState();
@@ -75,5 +75,10 @@ class DataMapper
         $new = $this->state($entity);
 
         return $old ? array_diff($new, $old) : $new;
+    }
+
+    protected function stateMap(): StateMap
+    {
+        return new StateMap($this->entity);
     }
 }
