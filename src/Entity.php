@@ -90,4 +90,9 @@ class Entity implements Stateable
     {
         return $this->$name;
     }
+
+    public function __isset($name)
+    {
+        return isset($this->$name);
+    }
 }
