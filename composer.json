@@ -10,7 +10,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "D2\\": "src/"
+            "D2\\DataMapper\\": "src/"
         }
     },
     "autoload-dev": {
@@ -21,8 +21,7 @@
     },
     "require": {
         "php": ">=7.4",
-        "demidovich/d2-entity-builder": "^0.4",
-        "demidovich/d2-hydrator": "^0.1.0"
+        "demidovich/d2-hydrator": "^0.2.0"
     },
     "require-dev": {
         "phpunit/phpunit": ">=8.0",
