@@ -2,25 +2,34 @@
 
 namespace Performance\Hydratable;
 
-use D2\DataMapper\Entity;
-use D2\DataMapper\Entity\Hydratable;
+use D2\DataMapper\Contracts\Stateable;
 
 /**
  * @property string  $country;
  * @property string  $city;
  * @property string  $street;
  * @property string  $house;
- * @property ?string $flat = null;
+ * @property string  $flat;
  * @property int     $zip_code;
  */
-class UserAddress extends Entity
+class UserAddress implements Stateable
 {
-    use Hydratable;
+    private  string $country;
+    private  string $city;
+    private  string $street;
+    private  string $house;
+    private ?string $flat = null;
+    private  int    $zip_code;
 
-    private string $country;
-    private string $city;
-    private string $street;
-    private string $house;
-    private string $flat;
-    private int    $zip_code;
+    public function toState()
+    {
+        return [
+            'address_country'  => $this->country,
+            'address_city'     => $this->city,
+            'address_street'   => $this->street,
+            'address_house'    => $this->house,
+            'address_flat'     => $this->flat,
+            'address_zip_code' => $this->zip_code,
+        ];
+    }
 }

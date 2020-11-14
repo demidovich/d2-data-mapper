@@ -4,7 +4,6 @@ namespace Performance\Hydratable;
 
 use DateTimeImmutable;
 use D2\DataMapper\Entity;
-use D2\DataMapper\Entity\Hydratable;
 
 /**
  * @property UserId $id;
@@ -21,8 +20,6 @@ use D2\DataMapper\Entity\Hydratable;
  */
 class User extends Entity
 {
-    use Hydratable;
-
     private UserId $id;
     private UserName $name;
     private UserEmail $email;
@@ -40,7 +37,7 @@ class User extends Entity
         
     }
 
-    protected static function statePrefixes(): array
+    protected static function valueObjectPrefixes(): array
     {
         return [
             'preferences' => UserPreferences::class,
