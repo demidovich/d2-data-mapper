@@ -1,8 +1,10 @@
 <?php
 
-namespace Tests\Stubs;
+namespace Tests\Stubs\User;
 
-use D2\DataMapper\JsonEntity;
+use D2\DataMapper\Contracts\Stateable;
+use D2\DataMapper\Traits\Jsonable;
+use Performance\Hardcode\Entity;
 
 /**
  * @property bool   $subsribe_news
@@ -12,8 +14,10 @@ use D2\DataMapper\JsonEntity;
  * 
  * @method static self fromState($state)
  */
-class UserPreferencesJson extends JsonEntity
+class UserPreferencesJsonable implements Stateable
 {
+    use Jsonable;
+
     protected  bool   $subsribe_news = true;
     protected  bool   $subsribe_notifications = true;
     protected  string $locale = 'ru_RU';

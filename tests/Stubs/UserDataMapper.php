@@ -36,9 +36,9 @@ class UserDataMapper extends DataMapper
         );
     }
 
-    public function retrieveModifiable(int $pkey): User
+    public function retrieveForUpdate(int $pkey): User
     {
-        return $this->modifiableEntity(
+        return $this->entityForUpdate(
             $this->testingState
         );
     }
@@ -48,8 +48,8 @@ class UserDataMapper extends DataMapper
         return $this->state($entity);
     }
 
-    public function entityModifiedState($entity): array
+    public function entityStateDiff($entity): array
     {
-        return $this->modifiedState($entity);
+        return $this->stateDiff($entity);
     }
 }

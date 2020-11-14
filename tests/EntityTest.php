@@ -4,8 +4,8 @@ namespace Tests;
 
 use InvalidArgumentException;
 use Tests\Stubs\User;
-use Tests\Stubs\UserId;
-use Tests\Stubs\UserAddress;
+use Tests\Stubs\User\UserId;
+use Tests\Stubs\User\UserAddress;
 use PHPUnit\Framework\TestCase;
 
 class EntityTest extends TestCase

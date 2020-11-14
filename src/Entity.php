@@ -3,11 +3,14 @@
 namespace D2\DataMapper;
 
 use D2\DataMapper\Contracts\Stateable;
+use D2\DataMapper\State\StateMap;
 use D2\Hydrator\Hydrator;
 use RuntimeException;
 
 class Entity implements Stateable
 {
+    protected $primaryKey = 'id';
+
     protected function init(): void
     {
     }
@@ -84,6 +87,27 @@ class Entity implements Stateable
         }
 
         return $state;
+    }
+
+    /**
+     * Difference beetween trackable and current states.
+     */
+    public function toDiffState(): array
+    {
+        return StateMap::diff($this, $this->primaryKey());
+    }
+
+    public function primaryKey()
+    {
+        return $this->{$this->primaryKey};
+    }
+
+    /**
+     * Enable tracking of entity state.
+     */
+    public function track(): void
+    {
+        StateMap::put($this, $this->primaryKey());
     }
 
     public function __get($name)
