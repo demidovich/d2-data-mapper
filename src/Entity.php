@@ -105,7 +105,7 @@ class Entity implements Stateable
     /**
      * Enable tracking of entity state.
      */
-    public function track(): void
+    public function trackState(): void
     {
         StateMap::put($this, $this->primaryKey());
     }

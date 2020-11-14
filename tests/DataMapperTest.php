@@ -35,7 +35,7 @@ class DataMapperTest extends TestCase
 
         $mapper = new UserDataMapper($originState);
         $entity = $mapper->retrieve(123);
-        $entity->track();
+        $entity->trackState();
 
         $entity->rename('new name');
         $entity->subscribeNews();
