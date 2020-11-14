@@ -17,5 +17,4 @@ interface Stateable
      * @return string|array
      */
     public function toState();
-
 }

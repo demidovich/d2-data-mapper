@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Stubs;
+namespace Tests\Stubs\User;
 
 use D2\DataMapper\Contracts\Stateable;
 

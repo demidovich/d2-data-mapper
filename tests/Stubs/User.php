@@ -2,17 +2,20 @@
 
 namespace Tests\Stubs;
 
-use Tests\Stubs\UserId;
-use Tests\Stubs\UserAddress;
 use D2\DataMapper\Entity;
+use DateTimeImmutable;
 use InvalidArgumentException;
+use Tests\Stubs\User\UserAddress;
+use Tests\Stubs\User\UserId;
+use Tests\Stubs\User\UserPreferencesJsonable;
 
 /**
  * @property UserId $id
  * @property string $name
  * @property string $email
  * @property UserAddress $address
- * @property UserPreferencesJson $preferences
+ * @property UserPreferencesJsonable $preferences
+ * @property DateTimeImmutable $active_at
  * 
  * @method static self fromState($state)
  */
@@ -22,7 +25,8 @@ class User extends Entity
     protected string $name;
     protected string $email;
     protected UserAddress $address;
-    protected UserPreferencesJson $preferences;
+    protected UserPreferencesJsonable $preferences;
+    protected ?DateTimeImmutable $active_at = null;
 
     protected function init(): void
     {

@@ -8,7 +8,16 @@ use Tests\Stubs\UserDataMapper;
 
 class DataMapperTest extends TestCase
 {
-    public function test_retrieve_state()
+    public function test_retrieve()
+    {
+        $state  = $this->userState();
+        $mapper = new UserDataMapper($state);
+        $entity = $mapper->retrieve(123);
+
+        $this->assertInstanceOf(User::class, $entity);
+    }
+
+    public function test_entity_state()
     {
         $originState = $this->userState();
 
@@ -16,25 +25,26 @@ class DataMapperTest extends TestCase
         $entity = $mapper->retrieve(123);
         $state  = $mapper->entityState($entity);
 
-        $this->assertInstanceOf(User::class, $entity);
         $this->assertNotEmpty($state);
         $this->assertEquals($originState, $state);
     }
 
-    public function test_retrieve_modified_state()
+    public function test_entity_diff_state()
     {
         $originState = $this->userState();
 
         $mapper = new UserDataMapper($originState);
-        $entity = $mapper->retrieveModifiable(123);
+        $entity = $mapper->retrieve(123);
+        $entity->trackState();
+
         $entity->rename('new name');
         $entity->subscribeNews();
 
-        $modifiedState = $mapper->entityModifiedState($entity);
-        
-        $this->assertEquals(2, count($modifiedState));
-        $this->assertTrue(isset($modifiedState['name']));
-        $this->assertTrue(isset($modifiedState['preferences']));
+        $stateDiff = $entity->toDiffState();
+
+        $this->assertEquals(2, count($stateDiff));
+        $this->assertTrue(isset($stateDiff['name']));
+        $this->assertTrue(isset($stateDiff['preferences']));
     }
 
     private function userState()
