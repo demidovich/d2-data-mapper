@@ -31,10 +31,6 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/demidovich/d2-entity-builder"
-        },
-        {
-            "type": "vcs",
             "url": "https://github.com/demidovich/d2-hydrator"
         }
     ],
