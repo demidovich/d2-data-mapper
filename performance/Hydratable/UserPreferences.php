@@ -2,8 +2,7 @@
 
 namespace Performance\Hydratable;
 
-use D2\DataMapper\Entity;
-use D2\DataMapper\Entity\Hydratable;
+use D2\DataMapper\Contracts\Stateable;
 
 /**
  * @property string $locale;
@@ -13,14 +12,24 @@ use D2\DataMapper\Entity\Hydratable;
  * @property bool   $subscribe_news;
  * @property bool   $subscribe_messages;
  */
-class UserPreferences extends Entity
+class UserPreferences implements Stateable
 {
-    use Hydratable;
-
     private string $locale;
     private string $language;
     private string $timezone;
     private string $theme;
     private bool   $subscribe_news;
     private bool   $subscribe_messages;
+
+    public function toState()
+    {
+        return [
+            'locale'             => $this->locale,
+            'filanguageeld1'     => $this->language,
+            'timezone'           => $this->timezone,
+            'theme'              => $this->theme,
+            'subscribe_news'     => $this->subscribe_news,
+            'subscribe_messages' => $this->subscribe_messages,
+        ];
+    }
 }

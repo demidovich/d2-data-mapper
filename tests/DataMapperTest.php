@@ -40,7 +40,7 @@ class DataMapperTest extends TestCase
         $entity->rename('new name');
         $entity->subscribeNews();
 
-        $stateDiff = $entity->toDiffState();
+        $stateDiff = $mapper->entityDiffState($entity);
 
         $this->assertEquals(2, count($stateDiff));
         $this->assertTrue(isset($stateDiff['name']));

@@ -28,15 +28,33 @@ class DataMapper
     /**
      * Fetch entity state.
      * 
-     * @param Stateable $entity
+     * @param Entity $entity
      * @return array
      */
-    protected function state(Stateable $entity): array
+    protected function state(Entity $entity): array
     {
         $stateFields = array_flip($this->fields);
 
         return array_intersect_key(
             $entity->toState(), 
+            $stateFields
+        );
+    }
+
+    /**
+     * Fetch entity state differences. 
+     * This is available if $entity->trackState() has been called. 
+     * Without calling $entity->trackState() method returns all stateable parameters. 
+     * 
+     * @param Entity $entity
+     * @return array
+     */
+    protected function diffState(Entity $entity): array
+    {
+        $stateFields = array_flip($this->fields);
+
+        return array_intersect_key(
+            $entity->toDiffState(),
             $stateFields
         );
     }

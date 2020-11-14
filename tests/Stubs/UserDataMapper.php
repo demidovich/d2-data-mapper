@@ -36,20 +36,13 @@ class UserDataMapper extends DataMapper
         );
     }
 
-    public function retrieveForUpdate(int $pkey): User
-    {
-        return $this->entityForUpdate(
-            $this->testingState
-        );
-    }
-
     public function entityState($entity): array
     {
         return $this->state($entity);
     }
 
-    public function entityStateDiff($entity): array
+    public function entityDiffState($entity): array
     {
-        return $this->stateDiff($entity);
+        return $this->diffState($entity);
     }
 }
