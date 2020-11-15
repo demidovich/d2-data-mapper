@@ -44,10 +44,13 @@ class Entity implements Stateable
 
     public function toState(): array
     {
-        $state = [];
+        $state    = [];
         $prefixes = array_flip(static::valueObjectPrefixes());
+        $attrs    = get_object_vars($this);
 
-        foreach (get_object_vars($this) as $attr => $value) {
+        unset($attrs['primaryKey']);
+
+        foreach ($attrs as $attr => $value) {
 
             if (is_scalar($value) || $value === null) {
                 $state[$attr] = $value;
