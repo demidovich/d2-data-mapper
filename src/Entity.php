@@ -9,8 +9,6 @@ use RuntimeException;
 
 class Entity implements Stateable
 {
-    protected $primaryKey = 'id';
-
     protected function init(): void
     {
     }
@@ -46,23 +44,13 @@ class Entity implements Stateable
     {
         $state    = [];
         $prefixes = array_flip(static::valueObjectPrefixes());
-        $attrs    = get_object_vars($this);
 
-        unset($attrs['primaryKey']);
-
-        foreach ($attrs as $attr => $value) {
+        foreach (get_object_vars($this) as $attr => $value) {
 
             if (is_scalar($value) || $value === null) {
                 $state[$attr] = $value;
                 continue;
             }
-
-            // if (! ($value instanceof Stateable)) {
-            //     $type = gettype($value);
-            //     throw new RuntimeException(
-            //         "Entity attributes can be a scalar or instance of Stateable contract. Attribute \"{$attr}\" is a \"{$type}\""
-            //     );
-            // }
 
             if (! ($value instanceof Stateable)) {
                 continue;
@@ -97,12 +85,23 @@ class Entity implements Stateable
      */
     public function toDiffState(): array
     {
-        return StateMap::diff($this, $this->primaryKey());
+        return StateMap::diff($this);
     }
 
+    /**
+     * Primary key field name.
+     */
+    public static function primaryKeyField()
+    {
+        return 'id';
+    }
+
+    /**
+     * Value of the primary key.
+     */
     public function primaryKey()
     {
-        return $this->{$this->primaryKey};
+        return $this->{static::primaryKeyField()};
     }
 
     /**
@@ -110,7 +109,7 @@ class Entity implements Stateable
      */
     public function trackState(): void
     {
-        StateMap::put($this, $this->primaryKey());
+        StateMap::put($this);
     }
 
     public function __get($name)

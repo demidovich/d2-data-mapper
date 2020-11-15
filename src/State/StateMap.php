@@ -3,6 +3,7 @@
 namespace D2\DataMapper\State;
 
 use D2\DataMapper\Contracts\Stateable;
+use D2\DataMapper\Entity;
 
 /**
  * The class stores the initial state of the entities.
@@ -12,9 +13,10 @@ class StateMap
 {
     private static array $map;
 
-    public static function put(Stateable $entity, $pkey): void
+    public static function put(Entity $entity): void
     {
         $class = get_class($entity);
+        $pkey  = $entity->primaryKey();
 
         if ($pkey instanceof Stateable) {
             $pkey = $pkey->toState();
@@ -25,9 +27,10 @@ class StateMap
         }
     }
 
-    public static function diff(Stateable $entity, $pkey): ?array
+    public static function diff(Entity $entity): ?array
     {
         $class = get_class($entity);
+        $pkey  = $entity->primaryKey();
 
         if ($pkey instanceof Stateable) {
             $pkey = $pkey->toState();
