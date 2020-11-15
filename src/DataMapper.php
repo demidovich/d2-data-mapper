@@ -7,7 +7,6 @@ use D2\DataMapper\Contracts\Stateable;
 class DataMapper
 {
     protected string $entity;
-    protected string $primaryKey;
     protected array  $fields;
 
     /**
