@@ -8,6 +8,7 @@ use D2\DataMapper\Entity;
 /**
  * The class stores the initial state of the entities.
  * This is needed to detect modified attributes.
+ * 
  */
 class StateMap
 {
