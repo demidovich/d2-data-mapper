@@ -25,4 +25,4 @@ cache:
     - $HOME/.composer/cache
 
 after_success:
-  - codecov
+  - bash <(curl -s https://codecov.io/bash)
