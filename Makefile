@@ -18,5 +18,15 @@ down: ## Start container
 clean: ## Remove docker image
 	docker stop d2-data-mapper; docker rmi -f d2-data-mapper
 
+test-psalm: ## Run psalm tests
+	docker exec d2-data-mapper /app/vendor/bin/psalm
+
+test-phpunit: ## Run phpunit tests
+	docker exec d2-data-mapper php /app/vendor/bin/phpunit
+
+test-coverage: ## Run phpunit coverage tests
+	docker exec d2-data-mapper php -dextension=xdebug.so -dxdebug.mode=coverage /app/vendor/bin/phpunit --colors=always --coverage-text --coverage-clover coverage.clover
+	docker exec d2-data-mapper sed -i 's/\/app\/src/.\/src/' ./coverage.clover
+
 shell: ## Shell of php container
 	docker exec -ti --user ${UID}:${GID} d2-data-mapper /bin/sh
