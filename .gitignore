@@ -19,6 +19,7 @@ Homestead.yaml
 
 /vendor
 /coverage
+/coverage.*
 /composer.lock
 /phpunit.xml
 .phpunit.result.cache
