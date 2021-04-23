@@ -4,6 +4,7 @@
 
 Package provides a simple implementation of the data mapper.
 
+
 #### Example of usage
 
 Entity

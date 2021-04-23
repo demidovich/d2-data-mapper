@@ -1,20 +1,14 @@
-sudo: false
-
 language: php
 
 php:
   - 7.4
 
-before_install:
-  - sudo pip install codecov
-
 before_script:
   - travis_retry composer self-update
   - travis_retry composer install --no-interaction --prefer-source --dev
-  - phpenv rehash
 
 script:
-  - vendor/bin/phpunit --verbose --colors --coverage-clover=coverage.xml
+  - vendor/bin/phpunit --coverage-clover=coverage.xml
 
 branches:
   only:
@@ -25,4 +19,4 @@ cache:
     - $HOME/.composer/cache
 
 after_success:
-  - codecov
+  - bash <(curl -s https://codecov.io/bash)
