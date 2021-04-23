@@ -16,9 +16,9 @@ RUN set -eux; \
     fi; \
     cp -f "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"; \
     install-composer.sh $PHP_COMPOSER_VERSION; \
-    chown -R www-data:www-data /composer; \
-    wget https://github.com/vimeo/psalm/releases/latest/download/psalm.phar -O /usr/local/bin/psalm; \
-    chmod +x /usr/local/bin/psalm;
+    chown -R www-data:www-data /composer;
+    # wget https://github.com/vimeo/psalm/releases/latest/download/psalm.phar -O /usr/local/bin/psalm; \
+    # chmod +x /usr/local/bin/psalm;
     # docker-php-ext-enable xdebug;
 
 RUN chmod u+s /usr/local/sbin/php-fpm

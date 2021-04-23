@@ -2,4 +2,4 @@
 
 cd "$(dirname "$0")"
 
-docker exec -ti d2-data-mapper psalm $@
+docker exec -ti d2-data-mapper /app/vendor/bin/psalm $@
