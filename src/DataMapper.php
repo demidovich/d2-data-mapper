@@ -3,6 +3,7 @@
 namespace D2\DataMapper;
 
 use D2\DataMapper\Contracts\Stateable;
+use RuntimeException;
 
 class DataMapper
 {
@@ -17,11 +18,31 @@ class DataMapper
      */
     protected function entity($state): ?Stateable
     {
-        if (! $state) {
-            return null;
-        }
+        // if (! property_exists($this, 'entity')) {
+        //     throw new RuntimeException(
+        //         vsprintf('DataMapper realisation %s does not define "entity" property.', [
+        //             get_called_class()
+        //         ])
+        //     );
+        // }
 
-        return ($this->entity)::fromState($state);
+        // if ($state) {
+        //     $entity = ($this->entity)::fromState($state);
+        //     if (! ($entity instanceof Stateable)) {
+        //         throw new RuntimeException(
+        //             vsprintf('The property "entity" of DataMapper realisation %s not implementing the %s.', [
+        //                 get_called_class(),
+        //                 Stateable::class
+        //             ])
+        //         );
+        //     }
+        // } else {
+        //     $entity = null;
+        // }
+
+        // return $entity;
+
+        return $state ? ($this->entity)::fromState($state) : null;
     }
 
     /**
