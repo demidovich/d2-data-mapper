@@ -14,7 +14,7 @@ before_script:
   - phpenv rehash
 
 env:
-  - CODECOV_TOKEN="$CODECOV_TOKEN"
+  - CODECOV_TOKEN="${{ secrets.CODECOV_TOKEN }}"
 
 script:
   - vendor/bin/phpunit --verbose --colors --coverage-clover=coverage.xml
