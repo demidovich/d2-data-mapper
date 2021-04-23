@@ -7,14 +7,16 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     phpVersion="7.4"
     findUnusedVariablesAndParams="true"
-    findUnusedCode="true"
 >
-    <projectFiles>
+    <projectFiles xmlns="https://getpsalm.org/schema/config">
         <directory name="src" />
     </projectFiles>
 </psalm>
 <!--
     https://psalm.dev/docs/running_psalm/configuration/
+
+    runTaintAnalysis="true"
+    checkForThrowsDocblock="true"
 
     parameter                           default
 
